@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "625086895473",
+    "project_id": "mealappflutter-project",
+    "storage_bucket": "mealappflutter-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:625086895473:android:a9cf20f071c3191e7552d0",
+        "android_client_info": {
+          "package_name": "com.carol.mealappflutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnv8PCCnmmQYFdXYe8xW2JXabmFJn_YL0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

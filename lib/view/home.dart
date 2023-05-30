@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mealappflutter/constants/routes.dart';
 import 'package:mealappflutter/main.dart';
 import 'package:mealappflutter/view/details.dart';
+import 'package:mealappflutter/view/forget_password.dart';
+import 'package:mealappflutter/view/register.dart';
+import 'package:mealappflutter/view/verify_email.dart';
+import 'package:mealappflutter/view/welcome.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: NavClass(),
+      home: WelcomeView(),
     );
   }
 }
