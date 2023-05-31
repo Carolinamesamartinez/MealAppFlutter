@@ -3,6 +3,7 @@ import 'package:mealappflutter/constants/routes.dart';
 import 'package:mealappflutter/main.dart';
 import 'package:mealappflutter/view/details.dart';
 import 'package:mealappflutter/view/forget_password.dart';
+import 'package:mealappflutter/view/login.dart';
 import 'package:mealappflutter/view/register.dart';
 import 'package:mealappflutter/view/verify_email.dart';
 import 'package:mealappflutter/view/welcome.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: WelcomeView(),
+      home: RegisterView(),
     );
   }
 }
@@ -32,7 +33,7 @@ class NavClass extends StatefulWidget {
 class _NavClassState extends State<NavClass> {
   int _currentIndex = 0;
 
-  final List<Widget> _screens = [Home(), ScreenThree()];
+  final List<Widget> _screens = [Home(), ScreenThree(), ScreenThree()];
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +52,21 @@ class _NavClassState extends State<NavClass> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            label: 'Search',
+            label: 'Buscar',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Test',
+            icon: IconButton(
+              icon: Icon(Icons.login),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginView()));
+              },
+            ),
+            label: 'Cerrar sesión',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.send_and_archive),
+            label: 'uwu',
           ),
         ],
       ),
