@@ -111,6 +111,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(const AuthStateNeedsVerification(isLoading: false));
         } else {
           // we emit the login event
+          // we take out os this state to bring it another time the right way
           emit(const AuthStateLoggedOut(excption: null, isLoading: false));
           emit(AuthStateLOgin(user: user, isLoading: false));
         }

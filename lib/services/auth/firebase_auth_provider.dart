@@ -46,9 +46,30 @@ class FirebaseAuthProvider implements AuthProvider {
   }
 
   @override
-  Future<AuthUser> logIn({required String email, required String password}) {
-    // TODO: implement logIn
-    throw UnimplementedError();
+  Future<AuthUser> logIn(
+      {required String email, required String password}) async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      final user = currentUser;
+      if (user != null) {
+        return user;
+      } else {
+        throw UserNotLoggedin();
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        throw UserNotFound();
+      } else if (e.code == 'wrong-password') {
+        throw WrongPassword();
+      } else {
+        throw GenericAuthException();
+      }
+    } catch (_) {
+      throw GenericAuthException();
+    }
   }
 
   @override

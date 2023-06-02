@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mealappflutter/services/auth/bloc/auth_bloc.dart';
+import 'package:mealappflutter/services/auth/bloc/auth_event.dart';
 
 class VerifyEmailView extends StatefulWidget {
   const VerifyEmailView({super.key});
@@ -9,6 +12,7 @@ class VerifyEmailView extends StatefulWidget {
   State<VerifyEmailView> createState() => _VerifyEmailViewState();
 }
 
+//we dont nead a bloclistener because we dont do anything extra to bloc only events , for example we dont send the event any text we dont do any changues in the bloc
 class _VerifyEmailViewState extends State<VerifyEmailView> {
   @override
   Widget build(BuildContext context) {
@@ -46,6 +50,9 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                 SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
+                    context
+                        .read<AuthBloc>()
+                        .add(const AuthEventSendEmailVerification());
                     // Lógica del botón
                   },
                   style: ElevatedButton.styleFrom(
@@ -64,6 +71,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                 SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
+                    context.read<AuthBloc>().add(const AuthEventLogOut());
                     // Lógica del botón
                   },
                   style: ElevatedButton.styleFrom(

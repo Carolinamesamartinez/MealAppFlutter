@@ -1,84 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mealappflutter/constants/routes.dart';
 import 'package:mealappflutter/main.dart';
+import 'package:mealappflutter/services/auth/bloc/auth_bloc.dart';
+import 'package:mealappflutter/services/auth/bloc/auth_event.dart';
+import 'package:mealappflutter/services/auth/bloc/auth_state.dart';
+import 'package:mealappflutter/services/auth/firebase_auth_provider.dart';
+import 'package:mealappflutter/utilities/dialogs/logout_dialog.dart';
 import 'package:mealappflutter/view/details.dart';
 import 'package:mealappflutter/view/forget_password.dart';
 import 'package:mealappflutter/view/login.dart';
+import 'package:mealappflutter/view/navbar.dart';
 import 'package:mealappflutter/view/register.dart';
 import 'package:mealappflutter/view/verify_email.dart';
 import 'package:mealappflutter/view/welcome.dart';
 
 void main() {
-  runApp(MyApp());
-}
+  //initialize widgets
+  WidgetsFlutterBinding.ensureInitialized();
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  runApp(
+    MaterialApp(
       title: 'Navbar Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: RegisterView(),
-    );
-  }
+      //instance of bloc
+      home: BlocProvider<AuthBloc>(
+        create: (context) => AuthBloc(FirebaseAuthProvider()),
+        child: const MainStateView(),
+      ),
+    ),
+  );
 }
 
-class NavClass extends StatefulWidget {
-  @override
-  _NavClassState createState() => _NavClassState();
-}
-
-class _NavClassState extends State<NavClass> {
-  int _currentIndex = 0;
-
-  final List<Widget> _screens = [Home(), ScreenThree(), ScreenThree()];
+class MainStateView extends StatelessWidget {
+  const MainStateView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _screens,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Buscar',
-          ),
-          BottomNavigationBarItem(
-            icon: IconButton(
-              icon: Icon(Icons.login),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LoginView()));
-              },
-            ),
-            label: 'Cerrar sesión',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.send_and_archive),
-            label: 'uwu',
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ScreenThree extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Test'),
+    context.read<AuthBloc>().add(const AuthEventInitialize());
+    return BlocConsumer<AuthBloc, AuthState>(
+      builder: (context, state) {
+        if (state is AuthStateLOgin) {
+          return NavClass();
+        } else if (state is AuthStateNeedsVerification) {
+          return const VerifyEmailView();
+        } else if (state is AuthStateLoggedOut) {
+          return const LoginView();
+        } else if (state is AuthStateRegistering) {
+          return const RegisterView();
+        } else if (state is AuthStateorgotPasseord) {
+          return const ForgotPasswordView();
+        } else {
+          return const Scaffold(
+            body: CircularProgressIndicator(),
+          );
+        }
+      },
+      listener: (context, state) {},
     );
   }
 }

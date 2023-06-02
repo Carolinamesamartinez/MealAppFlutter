@@ -2,27 +2,58 @@ import 'package:clippy_flutter/clippy_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mealappflutter/data/mealmodel.dart';
+import 'package:mealappflutter/menu/menu_actions.dart';
 import 'package:mealappflutter/service/api_service.dart';
+import 'package:mealappflutter/services/auth/bloc/auth_bloc.dart';
+import 'package:mealappflutter/services/auth/bloc/auth_event.dart';
+import 'package:mealappflutter/utilities/dialogs/logout_dialog.dart';
 
-class DetailsView extends StatefulWidget {
-  final String idMeal;
-  const DetailsView({super.key, required this.idMeal});
+class RandomMeal extends StatefulWidget {
+  const RandomMeal({super.key});
 
   @override
-  State<DetailsView> createState() => _DetailsViewState();
+  State<RandomMeal> createState() => _RandomMealState();
 }
 
-class _DetailsViewState extends State<DetailsView> {
+class _RandomMealState extends State<RandomMeal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          PopupMenuButton<MenuActions>(
+            icon: Icon(
+              Icons.logout, // Aquí puedes usar cualquier otro ícono que desees
+              color: Colors.white,
+            ),
+            onSelected: (value) async {
+              switch (value) {
+                case MenuActions.logout:
+                  //menu item logout in the navbar
+                  final shouldLogOut = await showLogOutDialog(context);
+                  if (shouldLogOut) {
+                    context.read<AuthBloc>().add(const AuthEventLogOut());
+                  }
+              }
+            },
+            itemBuilder: (context) {
+              return [
+                const PopupMenuItem(
+                  value: MenuActions.logout,
+                  child: Text('Log Out'),
+                ),
+              ];
+            },
+          )
+        ],
+      ),
       body: Padding(
         padding: EdgeInsets.all(15),
         child: FutureBuilder<MealModel?>(
             //widgetidmeal because we need the parameter that is given to the widget in the constructor of detailsview
-            future: ApiService().getMealsDetails(widget.idMeal),
+            future: ApiService().getRandomMeal(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(

@@ -4,4 +4,5 @@ class ApiUrl {
   static String bUrl = 'https://themealdb.com/api/json/v1/1';
   static String mealNameEndPoint = 'search.php?s=';
   static String detailsMealEndPoint = 'lookup.php?i=';
+  static String randomDetails = 'random.php';
 }
