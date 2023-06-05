@@ -3,28 +3,35 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mealappflutter/services/auth/cloud/cloud_storage_constants.dart';
 
 @immutable
-class CloudNote {
+//properties of the class couldnt changue
+class CloudMeal {
   final String documentId;
   final String ownerUserId;
   final String mealName;
+  final String mealid;
   final String mealCategory;
   final String mealArea;
   final String mealImage;
+  final String mealInstructions;
 
-  const CloudNote({
-    required this.documentId,
-    required this.ownerUserId,
-    required this.mealName,
-    required this.mealCategory,
-    required this.mealArea,
-    required this.mealImage,
-  });
+  const CloudMeal(
+      {required this.documentId,
+      required this.ownerUserId,
+      required this.mealid,
+      required this.mealName,
+      required this.mealCategory,
+      required this.mealArea,
+      required this.mealImage,
+      required this.mealInstructions});
 
-  CloudNote.fromSnapshot(QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
+  CloudMeal.fromSnapshot(QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
       : documentId = snapshot.id,
-        ownerUserId = snapshot.data()[ownerUserIdFieldName],
-        mealName = snapshot.data()[mealNameCloud] as String,
-        mealCategory = snapshot.data()[mealCategoryCloud] as String,
-        mealArea = snapshot.data()[mealAreaCloud] as String,
-        mealImage = snapshot.data()[mealImageCloud] as String;
+        ownerUserId = snapshot.data()[ownerUserIdFieldName] as String,
+        mealName = snapshot.data()[mealNameCloud] as String? ?? '',
+        mealid = snapshot.data()[mealidCloud] as String? ?? '',
+        mealCategory = snapshot.data()[mealCategoryCloud] as String? ?? '',
+        mealArea = snapshot.data()[mealAreaCloud] as String? ?? '',
+        mealImage = snapshot.data()[mealImageCloud] as String? ?? '',
+        mealInstructions =
+            snapshot.data()[mealInstructionsCloud] as String? ?? '';
 }

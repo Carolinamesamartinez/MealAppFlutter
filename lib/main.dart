@@ -3,7 +3,12 @@ import 'package:mealappflutter/constants/apiurl.dart';
 import 'package:http/http.dart' as http;
 import 'package:mealappflutter/data/mealmodel.dart';
 import 'package:mealappflutter/service/api_service.dart';
+import 'package:mealappflutter/services/auth/bloc/auth_service.dart';
 import 'package:mealappflutter/view/details.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+
+import 'services/auth/cloud/firebase_cloud_storage.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -13,12 +18,14 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  late final FirebaseCloudStorage _mealsService;
+
   TextEditingController _textFieldController = TextEditingController();
   List<Meals>? _modelInfo;
   @override
   void initState() {
     super.initState();
-    // _getData();
+    _mealsService = FirebaseCloudStorage();
   }
 
   void _getData(String mealName) async {
@@ -142,6 +149,51 @@ class _HomeState extends State<Home> {
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.w300),
                                             ),
+                                            IconButton(
+                                                onPressed: () async {
+                                                  final currentUser =
+                                                      AuthService.firebase()
+                                                          .currentUser!;
+                                                  final userId =
+                                                      currentUser.idUser;
+
+                                                  // Seleccionar imagen desde la galería
+                                                  final imageUrl = meals
+                                                      .meals![index]
+                                                      .strMealThumb
+                                                      .toString();
+                                                  final response = await http
+                                                      .get(Uri.parse(imageUrl));
+                                                  final bytes =
+                                                      response.bodyBytes;
+                                                  await _mealsService
+                                                      .createNewFavoriteMeal(
+                                                    ownerUserId: userId,
+                                                    mealName: meals
+                                                        .meals![index].strMeal
+                                                        .toString(),
+                                                    mealArea: meals
+                                                        .meals![index].strArea
+                                                        .toString(),
+                                                    mealCategory: meals
+                                                        .meals![index]
+                                                        .strCategory
+                                                        .toString(),
+                                                    mealImage: meals
+                                                        .meals![index]
+                                                        .strMealThumb
+                                                        .toString(),
+                                                    mealInstructions: meals
+                                                        .meals![index]
+                                                        .strInstructions
+                                                        .toString(),
+                                                    mealid: meals
+                                                        .meals![index].idMeal
+                                                        .toString(),
+                                                  );
+                                                },
+                                                icon:
+                                                    const Icon(Icons.favorite)),
                                           ]),
                                     ),
                                   ],

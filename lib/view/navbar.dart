@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mealappflutter/main.dart';
 import 'package:mealappflutter/service/api_service.dart';
 import 'package:mealappflutter/utilities/dialogs/logout_dialog.dart';
+import 'package:mealappflutter/view/meal_view.dart';
 import 'package:mealappflutter/view/random.dart';
 
 import '../services/auth/bloc/auth_bloc.dart';
@@ -16,7 +17,7 @@ class NavClass extends StatefulWidget {
 class _NavClassState extends State<NavClass> {
   int _currentIndex = 0;
 
-  final List<Widget> _screens = [Home(), RandomMeal(), ScreenThree()];
+  final List<Widget> _screens = [Home(), RandomMeal(), MealView()];
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,7 @@ class _NavClassState extends State<NavClass> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.send_and_archive),
+            icon: Icon(Icons.favorite),
             label: 'uwu',
           ),
         ],
