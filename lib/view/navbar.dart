@@ -44,7 +44,7 @@ class _NavClassState extends State<NavClass> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite),
-            label: 'uwu',
+            label: 'Favoritos',
           ),
         ],
       ),
