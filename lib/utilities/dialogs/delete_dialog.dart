@@ -4,7 +4,7 @@ import 'package:mealappflutter/utilities/dialogs/generic_dialog.dart';
 Future<bool> showDeleteDialog(BuildContext context) {
   return showGenericDialog<bool>(
       context: context,
-      title: 'Delete Note',
+      title: 'Delete Meal',
       content: 'Are you sure you want to delete it ?',
       optionBuilder: () => {
             'Cancel': null,

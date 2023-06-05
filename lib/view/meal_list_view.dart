@@ -77,20 +77,15 @@ class MealsListView extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.w300),
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                IconButton(
-                                    onPressed: () async {
-                                      final shouldDelete =
-                                          await showDeleteDialog(context);
-                                      if (shouldDelete) {
-                                        oneDeleteMeal(meal);
-                                      }
-                                    },
-                                    icon: const Icon(Icons.delete)),
-                              ],
-                            )
+                            IconButton(
+                                onPressed: () async {
+                                  final shouldDelete =
+                                      await showDeleteDialog(context);
+                                  if (shouldDelete) {
+                                    oneDeleteMeal(meal);
+                                  }
+                                },
+                                icon: const Icon(Icons.delete)),
                           ]),
                     ),
                   ],
