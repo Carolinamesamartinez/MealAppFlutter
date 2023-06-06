@@ -72,20 +72,25 @@ class MealsListView extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold),
                             ),
-                            Text(
-                              meal.mealCategory.toString(),
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w300),
+                            Row(
+                              children: [
+                                Text(
+                                  meal.mealCategory.toString(),
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                                IconButton(
+                                    onPressed: () async {
+                                      final shouldDelete =
+                                          await showDeleteDialog(context);
+                                      if (shouldDelete) {
+                                        oneDeleteMeal(meal);
+                                      }
+                                    },
+                                    icon: const Icon(Icons.delete)),
+                              ],
                             ),
-                            IconButton(
-                                onPressed: () async {
-                                  final shouldDelete =
-                                      await showDeleteDialog(context);
-                                  if (shouldDelete) {
-                                    oneDeleteMeal(meal);
-                                  }
-                                },
-                                icon: const Icon(Icons.delete)),
                           ]),
                     ),
                   ],

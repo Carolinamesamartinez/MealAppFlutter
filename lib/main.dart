@@ -128,7 +128,7 @@ class _HomeState extends State<Home> {
                                           )),
                                     ),
                                     Container(
-                                      width: 190,
+                                      width: 200,
                                       child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -142,58 +142,69 @@ class _HomeState extends State<Home> {
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.bold),
                                             ),
-                                            Text(
-                                              meals.meals![index].strCategory
-                                                  .toString(),
-                                              style: TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.w300),
-                                            ),
-                                            IconButton(
-                                                onPressed: () async {
-                                                  final currentUser =
-                                                      AuthService.firebase()
-                                                          .currentUser!;
-                                                  final userId =
-                                                      currentUser.idUser;
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  meals
+                                                      .meals![index].strCategory
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.w300),
+                                                ),
+                                                IconButton(
+                                                    onPressed: () async {
+                                                      final currentUser =
+                                                          AuthService.firebase()
+                                                              .currentUser!;
+                                                      final userId =
+                                                          currentUser.idUser;
 
-                                                  // Seleccionar imagen desde la galería
-                                                  final imageUrl = meals
-                                                      .meals![index]
-                                                      .strMealThumb
-                                                      .toString();
-                                                  final response = await http
-                                                      .get(Uri.parse(imageUrl));
-                                                  final bytes =
-                                                      response.bodyBytes;
-                                                  await _mealsService
-                                                      .createNewFavoriteMeal(
-                                                    ownerUserId: userId,
-                                                    mealName: meals
-                                                        .meals![index].strMeal
-                                                        .toString(),
-                                                    mealArea: meals
-                                                        .meals![index].strArea
-                                                        .toString(),
-                                                    mealCategory: meals
-                                                        .meals![index]
-                                                        .strCategory
-                                                        .toString(),
-                                                    mealImage: meals
-                                                        .meals![index]
-                                                        .strMealThumb
-                                                        .toString(),
-                                                    mealInstructions: meals
-                                                        .meals![index]
-                                                        .strInstructions
-                                                        .toString(),
-                                                    mealid: meals
-                                                        .meals![index].idMeal
-                                                        .toString(),
-                                                  );
-                                                },
-                                                icon:
-                                                    const Icon(Icons.favorite)),
+                                                      // Seleccionar imagen desde la galería
+                                                      final imageUrl = meals
+                                                          .meals![index]
+                                                          .strMealThumb
+                                                          .toString();
+                                                      final response =
+                                                          await http.get(
+                                                              Uri.parse(
+                                                                  imageUrl));
+                                                      final bytes =
+                                                          response.bodyBytes;
+                                                      await _mealsService
+                                                          .createNewFavoriteMeal(
+                                                        ownerUserId: userId,
+                                                        mealName: meals
+                                                            .meals![index]
+                                                            .strMeal
+                                                            .toString(),
+                                                        mealArea: meals
+                                                            .meals![index]
+                                                            .strArea
+                                                            .toString(),
+                                                        mealCategory: meals
+                                                            .meals![index]
+                                                            .strCategory
+                                                            .toString(),
+                                                        mealImage: meals
+                                                            .meals![index]
+                                                            .strMealThumb
+                                                            .toString(),
+                                                        mealInstructions: meals
+                                                            .meals![index]
+                                                            .strInstructions
+                                                            .toString(),
+                                                        mealid: meals
+                                                            .meals![index]
+                                                            .idMeal
+                                                            .toString(),
+                                                      );
+                                                    },
+                                                    icon: const Icon(
+                                                        Icons.favorite)),
+                                              ],
+                                            ),
                                           ]),
                                     ),
                                   ],

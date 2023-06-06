@@ -8,6 +8,8 @@ import 'package:mealappflutter/menu/menu_actions.dart';
 import 'package:mealappflutter/service/api_service.dart';
 import 'package:mealappflutter/services/auth/bloc/auth_bloc.dart';
 import 'package:mealappflutter/services/auth/bloc/auth_event.dart';
+import 'package:mealappflutter/services/auth/bloc/auth_service.dart';
+import 'package:mealappflutter/services/auth/cloud/firebase_cloud_storage.dart';
 import 'package:mealappflutter/utilities/dialogs/logout_dialog.dart';
 
 class RandomMeal extends StatefulWidget {
@@ -18,6 +20,14 @@ class RandomMeal extends StatefulWidget {
 }
 
 class _RandomMealState extends State<RandomMeal> {
+  late final FirebaseCloudStorage _mealsService = FirebaseCloudStorage();
+/*
+  @override
+  void initState() {
+    super.initState();
+    _mealsService = FirebaseCloudStorage();
+  }
+*/
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,7 +115,6 @@ class _RandomMealState extends State<RandomMeal> {
                                         Row(
                                           children: [
                                             Icon(Icons.restaurant_menu),
-                                            SizedBox(width: 5),
                                             Text(mealsDetails.meals![0].strMeal
                                                 .toString()),
                                           ],
@@ -113,17 +122,16 @@ class _RandomMealState extends State<RandomMeal> {
                                         Row(
                                           children: [
                                             Icon(Icons.location_on),
-                                            SizedBox(width: 5),
                                             Text(mealsDetails.meals![0].strArea
                                                 .toString()),
                                           ],
-                                        ),
+                                        )
                                       ],
                                     ),
                                   ),
                                   SizedBox(
                                     height: 20,
-                                  ), // Espacio entre la imagen y el TextField
+                                  ),
                                   Icon(Icons.restaurant_rounded),
                                   Expanded(
                                     child: Scrollbar(
@@ -139,6 +147,42 @@ class _RandomMealState extends State<RandomMeal> {
                                         ),
                                       ),
                                     ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      IconButton(
+                                        onPressed: () async {
+                                          final currentUser =
+                                              AuthService.firebase()
+                                                  .currentUser!;
+                                          final userId = currentUser.idUser;
+                                          await _mealsService
+                                              .createNewFavoriteMeal(
+                                            ownerUserId: userId,
+                                            mealName: mealsDetails
+                                                .meals![0].strMeal
+                                                .toString(),
+                                            mealArea: mealsDetails
+                                                .meals![0].strArea
+                                                .toString(),
+                                            mealCategory: mealsDetails
+                                                .meals![0].strCategory
+                                                .toString(),
+                                            mealImage: mealsDetails
+                                                .meals![0].strMealThumb
+                                                .toString(),
+                                            mealInstructions: mealsDetails
+                                                .meals![0].strInstructions
+                                                .toString(),
+                                            mealid: mealsDetails
+                                                .meals![0].idMeal
+                                                .toString(),
+                                          );
+                                        },
+                                        icon: Icon(Icons.favorite),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
