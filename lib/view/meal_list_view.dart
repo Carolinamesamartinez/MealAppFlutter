@@ -35,11 +35,11 @@ class MealsListView extends StatelessWidget {
                 width: 360,
                 height: 100,
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 197, 176, 135),
+                  color: Color.fromARGB(255, 243, 232, 176),
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
                     BoxShadow(
-                      color: Color.fromARGB(255, 207, 167, 167),
+                      color: Color.fromARGB(255, 237, 217, 115),
                       spreadRadius: 3,
                       blurRadius: 10,
                       offset: Offset(0, 3),

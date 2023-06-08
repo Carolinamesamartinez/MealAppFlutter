@@ -27,7 +27,9 @@ class _DetailsViewState extends State<DetailsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 228, 206, 104),
+      ),
       body: Padding(
         padding: EdgeInsets.all(15),
         child: FutureBuilder<MealModel?>(
@@ -67,7 +69,7 @@ class _DetailsViewState extends State<DetailsView> {
                         height: 30,
                         child: Container(
                           width: double.infinity,
-                          color: Color.fromARGB(255, 202, 170, 170),
+                          color: Color.fromARGB(255, 223, 212, 162),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: Column(
@@ -92,9 +94,17 @@ class _DetailsViewState extends State<DetailsView> {
                                           Text(mealsDetails.meals![0].strArea
                                               .toString()),
                                         ],
-                                      )
+                                      ),
                                     ],
                                   ),
+                                ),
+                                Divider(
+                                  color: Color.fromARGB(255, 228, 206,
+                                      104), // Color de la línea (opcional)
+                                  height: 20, // Altura de la línea (opcional)
+                                  thickness: 2, // Grosor de la línea (opcional)
+                                  indent: 10, // Sangría izquierda (opcional)
+                                  endIndent: 10, // Sangría derecha (opcional)
                                 ),
                                 SizedBox(
                                   height: 20,
